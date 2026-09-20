@@ -1,0 +1,6 @@
+interface:
+  display_name: "PCB 艺术画与沉金谷子"
+  short_description: "默认优先沉金双面谷子，精修自然线条与角色细节，验证图层并交付工程"
+  default_prompt: "使用 $pcb-art-enig，根据我提供的图片制作或精修双面 PCB 艺术画，未指定工艺时优先沉金，保留当前认可版本并交付真实图层预览、PCB 与 Gerber。"
+policy:
+  allow_implicit_invocation: true
