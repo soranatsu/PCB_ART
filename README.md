@@ -1,12 +1,22 @@
-# PCB_ART · 0.2.0
+# PCB_ART · 0.2.1
 
 把插画转译为双面 PCB 艺术画。用 **单色阻焊、覆铜、白丝印和沉金开窗** 表现材质与画面，保留五官、发束、手部、裙摆和文字的结构。提供可运行的 Python 脚本、Codex skill、KiCad 输出、原生 Gerber 导出，以及 NFC 隔离、合并与调谐分析工具。
 
 本版将此前的文档型 skill 推进为可复现的工具。艺术方向由原稿、构图和语义区域确定，四材料分色提供初稿，保护区和显式覆盖负责关键细节。脚本不会自动识别人手、修正肢体或重画漂亮的脸，需要在母稿阶段完成这些视觉判断。
 
+## 鲸鱼娘双面板画
+
+主示例采用实际完成的鲸鱼娘通行证设计，正面「深海来信」递信，背面「与你共鸣」阅读。两面保持统一的脸、服装和蓝白沉金语言，用不同姿态、鲸尾与海底图书馆构成完整画面。
+
+![鲸鱼娘双面 PCB 艺术画与 NFC 装配示意](assets/deepseek-pass-v22.png)
+
+上图来自既有 v22 工程，芯片与电容为装配外观示意。尺寸 50 × 100 mm、R3，顶部为 18 × 3 mm 贯穿穿绳槽，背面左下安排 NFC。图中可查看发束、五官、双手、围裙裙褶、沉金标题和鲸鱼背景。
+
+仓库提供 [可运行的鲸鱼娘艺术图层示例](examples/deepseek_pass/README.md)。输入沿用原稿 1200 × 2400 像素、24 px/mm 网格，直接保留原有画幅。运行后产生艺术层 PCB、正常观看预览及差分；NFC 功能电路按 [集成说明](references/nfc.md) 单独合并。
+
 ## 本版改进
 
-- **按毫米工作**。默认示例 40 px/mm，对应 0.025 mm 网格。轮廓量化、板厂成像和实物加工是不同精度来源，网格尺寸不等于制造精度。
+- **按毫米工作**。采样率可设为 40 px/mm，对应 0.025 mm 网格；鲸鱼娘案例保留原稿的 24 px/mm。轮廓量化、板厂成像和实物加工是不同精度来源，网格尺寸不等于制造精度。
 - **保护关键细节**。眼睛、眉毛、嘴线、额头露肤、手指、字腔可以用保护掩膜标记。去噪仅删除明确 ROI 中、面积低于阈值且未碰保护区的完整孤岛。连续轮廓和负形孔洞保留。
 - **保留整体构图**。不自动裁边、缩人物、拉伸画幅。正反面共用画布，分面设计，背景用连贯层次与少量装饰组织。
 - **用实际材料预览**。深蓝、浅蓝、白、金四类，另出低蓝色色差预览。主要文字可分配金色，黄金面积与铜面积分开理解。
@@ -26,25 +36,20 @@ python -m venv .venv
 
 ```sh
 python -m pip install -r requirements.txt
-python examples/make_demo.py --out build/demo-source
-python scripts/pcb_art.py build build/demo-source/project.json --out build/demo-result
+python scripts/pcb_art.py build examples/deepseek_pass/project.json --out build/deepseek-result
 python -m unittest discover -s tests -v
 ```
 
 在 Windows 的非 UTF-8 环境下使用 `python -X utf8`。每次构建需选择新的输出目录，脚本拒绝覆盖既有修订。
 
-示例是仓库自带的抽象鲸鱼与拱廊双面设计，50 × 100 mm、R3、顶部 18 × 3 mm 穿绳槽。这组尺寸来自本项目约定，其他作品应按其真实尺寸、保护套和挂绳调整。
-
-![脚本生成的四材料双面示例](assets/toolkit-demo.png)
-
-示例左下留空区用于演示 NFC 艺术铜避让，白色鲸鱼图案可保留。它没有装配 NFC 电路，不能直接作为 NFC 成品。
+鲸鱼娘输入已整理为四材料，默认不去噪，保留人物与服装细节。NFC 区的装饰铜和金色开窗同时在两面避让，白色鲸鱼可保留。`examples/make_demo.py` 生成的小型几何图另供自动化回归使用。
 
 ### 导出 Gerber
 
 使用已安装的 KiCad 9/10，先执行对应命令的 `--help` 核对当前版本。实际回归使用 KiCad 10.0.5。
 
 ```sh
-python scripts/pcb_art.py gerber build/demo-result --kicad-cli /path/to/kicad-cli --out build/demo-gerber
+python scripts/pcb_art.py gerber build/deepseek-result --kicad-cli /path/to/kicad-cli --out build/deepseek-gerber
 ```
 
 该命令核对构建哈希，运行含警告和豁免的原生 DRC，导出六个艺术层及板框，生成 SHA-256 记录和 `Gerber.zip`。任何 DRC 违规都会阻止打包。艺术示例的槽为非金属化铣槽，位于板框文件，不重复生成假钻孔。**加入 NFC 电路后，按 [NFC 文档](references/nfc.md) 额外导出真实过孔钻孔文件，不能使用这个纯艺术包替代完整电路制造包。**
@@ -80,8 +85,6 @@ python scripts/pcb_art.py gerber build/demo-result --kicad-cli /path/to/kicad-cl
 ## NFC 工具
 
 ```sh
-# 先运行上述示例生成器，产生单匝回路的数值检查样本
-python scripts/nfc_analyze.py baseline build/demo-source/loop_baseline.json --out build/loop-baseline.json
 # 真实 10 匝紧凑线圈及跨层引出的匿名几何基准
 python scripts/nfc_analyze.py baseline examples/compact_10turn.json --out build/compact-baseline.json
 # 固定 L、芯片电容、板级 Cp 和加载条件下，从实测频率估算改容
@@ -113,7 +116,7 @@ python scripts/nfc_analyze.py retune --old-pF 27 --chip-pF 28.5 --board-pF 0 --m
 - [nfc.md](references/nfc.md) 给出电路集成、模型边界与实测流程。
 - [CHANGELOG.md](CHANGELOG.md) 记录版本变化。
 - `tests/` 检查字腔、保护区、镜像、孔槽、裕量、失败阻断和 NFC 数值基准。
-- GitHub Actions 运行相同单元测试与合成示例，上传检查产物。原生 KiCad 检查需在装有 KiCad 的环境另行运行。
+- GitHub Actions 运行相同单元测试、鲸鱼娘人物示例与几何回归，上传检查产物。原生 KiCad 检查需在装有 KiCad 的环境另行运行。
 
 精确扫描线矩形保留栅格图孔洞，避免矢量简化吃掉五官，代价是复杂插画可能产生较多对象和阶梯边缘。脚本记录对象数；大量对象时优先优化母稿的碎纹，选矢量路径重建局部轮廓，并以几何差分验收。
 

@@ -2,7 +2,7 @@
 name: pcb-art-enig
 description: 制作和精修 PCB 艺术画、双面谷子或挂件，以铜层、单色阻焊、白丝印及沉金开窗形成图案，输出可导入嘉立创 EDA 或 KiCad 的 PCB、Gerber 和预览。用于原图分层、工艺配色、字形与人物细节修复及生产稿审查；不用于普通功能电路设计或仅制作概念插画。
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # PCB 艺术画：从图片到制造图层
@@ -21,7 +21,7 @@ metadata:
 - 新作分层、配色、沉金、孔位或细节修改：先读 [设计与材料](references/design.md)。
 - 生成 PCB/Gerber、验证、导入或确认生产稿：先读 [导出与制造核查](references/fabrication.md)。
 - 头发、五官、肢体、猫耳羽饰、噪点、花体或回退修复：另读 [局部精修与视觉验收](references/refinement.md)。
-- 需要可运行图片转换、毫米参数、保护掩膜或差分：读 [脚本接口与精度](references/pipeline.md)，使用 `scripts/pcb_art.py`，从 `examples/make_demo.py` 生成配置。
+- 需要可运行图片转换、毫米参数、保护掩膜或差分：读 [脚本接口与精度](references/pipeline.md)，使用 `scripts/pcb_art.py`。人物实作配置见 `examples/deepseek_pass/project.json`；`examples/make_demo.py` 生成几何回归配置。
 - 添加、审查或调试无源 NFC：读 [NFC 集成与调试](references/nfc.md)，分别使用 `merge_nfc.py` 与 `nfc_analyze.py`。普通纯艺术画不加载 NFC 电路流程。
 - 恢复旧项目资源：读 [历史案例的复用边界](references/local-example.md)。新项目不依赖本机旧路径。
 

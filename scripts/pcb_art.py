@@ -20,7 +20,7 @@ from PIL import Image, ImageDraw
 from scipy import ndimage as ndi
 import sexpdata
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 MATERIALS = ("dark", "light", "white", "gold")
 PALETTE = ("#092b61", "#3477ab", "#faf8ee", "#be9c43")
 LAYER_NAMES = ("Cu", "Mask", "SilkS")

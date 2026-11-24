@@ -1,6 +1,6 @@
 # 脚本接口与精度
 
-`scripts/pcb_art.py` 将四种材料意图编译为真实铜、阻焊开窗和白丝印。先用 `examples/make_demo.py` 生成一份完整配置，再按此页修改。
+`scripts/pcb_art.py` 将四种材料意图编译为真实铜、阻焊开窗和白丝印。人物实作使用 `examples/deepseek_pass/project.json`，也可用 `examples/make_demo.py` 生成几何回归配置，再按此页修改。
 
 ## 画布与工艺参数
 

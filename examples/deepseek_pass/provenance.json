@@ -1,0 +1,18 @@
+{
+  "source_revision": "DeepSeek pass artwork v22",
+  "source_grid_px_per_mm": 24,
+  "source_canvas_px": [
+    1200,
+    2400
+  ],
+  "source_art_layers_sha256": {
+    "F_Cu.png": "15fce79f0b05ce6c19eb360a2dd0c1a813f2576b639d1b84583cce71139521c9",
+    "F_Mask.png": "d0296edb4613c89611ba82c7f54aeb03119e31fd97c5e043db83b0936a21a502",
+    "F_SilkS.png": "1d2d1e9735ef3b497d34a5f55af9819cee5e844884e25b637b1e51b389fdc5f5",
+    "B_Cu.png": "5ab5046ae0be4055585571b739b22c482e1fcfc0bb5bde84ddab551803e53aae",
+    "B_Mask.png": "2ea0d1bf3cc7a8eb5fa3646593248c5336fb922a542d94ffbb85c84ffd427a90",
+    "B_SilkS.png": "9c3589ea562509e0ce0adfdd2c4b284d0548bdfed7d0c61addf2ae6ca1edaa57"
+  },
+  "interpretation": "Four visible materials derived from existing artwork layers; white silk has display priority. Existing hidden copper is not reconstructed from visible labels. NFC circuit is not included in these art inputs.",
+  "sample_rights": "Character and artwork rights are retained by their respective rights holders; not relicensed under the MIT code license."
+}
