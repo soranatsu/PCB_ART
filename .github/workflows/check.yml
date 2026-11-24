@@ -1,0 +1,22 @@
+name: Reproducible artwork checks
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+      - run: python examples/make_demo.py --out build/demo-source --px-per-mm 20
+      - run: python scripts/pcb_art.py build build/demo-source/project.json --out build/demo-result
+      - run: python scripts/nfc_analyze.py baseline build/demo-source/loop_baseline.json --out build/loop.json
+      - run: python scripts/nfc_analyze.py baseline examples/compact_10turn.json --out build/compact-baseline.json
+      - run: python scripts/package_skill.py --out build/PCB_ART.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: checked-artwork-and-model
+          path: build/

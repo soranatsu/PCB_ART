@@ -1,0 +1,69 @@
+{
+  "release": "0.2.0",
+  "date": "2026-11-24",
+  "platform": "Windows",
+  "python": "3.14.7",
+  "native_kicad": "10.0.5",
+  "tests": {
+    "passed": 16,
+    "failed": 0,
+    "native_integration_included": true,
+    "scope": [
+      "RGB and exact material labels",
+      "protected cleanup and forehead override",
+      "negative holes and scanline rectangle union",
+      "front/back mirror and transparent routed slot",
+      "copper under-opening margin and silk gap",
+      "source-hash rejection",
+      "native DRC and seven-layer Gerber ZIP",
+      "NFC native merge preserves pads/nets/routes/functional copper graphics",
+      "functional-pad silk collision rejection",
+      "closed-path Neumann circle and GMD checks",
+      "explicit zero-board-Cp baseline"
+    ]
+  },
+  "demo": {
+    "size_mm": [
+      50,
+      100
+    ],
+    "pixel_pitch_mm": 0.025,
+    "source_layer_pixel_mismatch": {
+      "F.Cu": 0,
+      "F.Mask": 0,
+      "F.SilkS": 0,
+      "B.Cu": 0,
+      "B.Mask": 0,
+      "B.SilkS": 0
+    },
+    "native_DRC": "passed",
+    "object_counts": {
+      "F.Cu": 6015,
+      "F.Mask": 2745,
+      "F.SilkS": 7976,
+      "B.Cu": 3409,
+      "B.Mask": 2226,
+      "B.SilkS": 1032
+    }
+  },
+  "compact_10turn_baseline": {
+    "last_L_uH": 2.1092297077508224,
+    "target_external_pF": 36.812604796862956,
+    "last_step_delta_nH": 0.25316387136298246,
+    "board_Cp_pF": 0,
+    "external_art_copper": false
+  },
+  "not_verified": [
+    "independent Gerber geometric readback",
+    "factory CAM",
+    "assembled-board RF",
+    "scan probability",
+    "loaded Q"
+  ],
+  "script_sha256": {
+    "scripts/merge_nfc.py": "6fafe1a25eea7bd849426e4e0b7725378a984207574b83cac7050eb37cb19c6f",
+    "scripts/nfc_analyze.py": "a01c9a124f1b1c3e1d81e033aa6f96e905ce941088432c61f85f119555a824b7",
+    "scripts/package_skill.py": "40ae6314e34f5a99b0ac375907f7a1b3c8283553775e3a8ba58b4f0110ffe23e",
+    "scripts/pcb_art.py": "6a29fd0c0cb558a32825418cbd44e7a72215e43530547b72a5ed5d47a9ac8eab"
+  }
+}
